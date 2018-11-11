@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     ImageView playy,back,forw,back2,next;
     SeekBar seekBar;
-    TextView current_song_name;
+    TextView current_song_name,current_time,song_time;
     MediaPlayer mediaPlayer;
     Handler handler;
     Runnable runnable;
@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     Adapter adapter;
     ListView listView;
     int pos;
+    long total_duration,current_duration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         back = findViewById(R.id.back_btn);
         forw = findViewById(R.id.for_btn);
         current_song_name = findViewById(R.id.current_song_name);
+        current_time = findViewById(R.id.current_time);
+        song_time = findViewById(R.id.song_time);
         back2 = findViewById(R.id.back2_btn);
         next = findViewById(R.id.next_btn);
         listView = findViewById(R.id.listview);
@@ -51,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         songDataArrayList.add(new SongData("La Calin", R.drawable.lacalin, R.raw.lacalin));
         songDataArrayList.add(new SongData("Lay Lay", R.drawable.laylay, R.raw.laylay));
         songDataArrayList.add(new SongData("Six Feet Under", R.drawable.belli, R.raw.sixfeet));
+        songDataArrayList.add(new SongData("لو عمري يرجع", R.drawable.samo, R.raw.samo));
+        songDataArrayList.add(new SongData("Balti - Ya Lili feat. Hamouda", R.drawable.balti, R.raw.balti));
 
         adapter = new Adapter(getApplicationContext(), 0 , songDataArrayList);
 
@@ -78,9 +83,10 @@ public class MainActivity extends AppCompatActivity {
                 if (songData != null)
                 {
                     mediaPlayer = MediaPlayer.create(getApplicationContext(), songData.getSong_resource());
+                    mediaPlayer.setLooping(true);
                 }
 
-                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
+                /*mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
                 {
                     @Override
                     public void onCompletion(MediaPlayer mp)
@@ -110,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                             current_song_name.setText(songData1.getSong_name());
                         }
                     }
-                });
+                });*/
 
                 mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener()
                 {
